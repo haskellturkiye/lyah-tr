@@ -37,4 +37,10 @@ Haskell *zarif ve özlü*dür. Çünkü üst seviye konseptler kullanır ve Hask
 
 Haskell bazı *gerçekten akıllı çocuklar* (PhDleri var) tarafından oluşturuldu. Haskell çalışmaları 1987'de taş gibi bir dil oluşturmak isteyen araştırmacıları komitesiyle birlikte başladı. 203 yılında Haskell Raporu yayınlandı ki bu dil için kararlı bir sürüm tanımıydı.
 
+## Dalmak İçin Ne Lazım?
 
+Bir metin düzenleyici ve Haskell derleyicisi. Büyük ihtimalle gönül verdiğiniz bir metin düzenleyiciniz zaten vardır, bununla zaman kaybetmeyeceğiz. Bu dökümanın niyeti GHC yani en çok kullanılan Haskell derleyicisini kullanmak olacak. En iyi yolu ise [Haskell Platform](http://hackage.haskell.org/platform/)'u indirmek olacaktır. Basitçe bu, herşey dahil Haskell oluyor.
+
+GHC bir Haskell kod dosyası (dosya adı genelde .hs ile biter) alabilir  ve derleyebilir. Ayrıca etkileşimli bir hali de vardır ki yaz-çalıştır şeklinde kodlarımızı yazabiliriz. GHC'ye yüklediğiniz dosya içerisindeki fonksiyonları etkileşimli halde çalıştırabilir ve hemen sonucu alabilirsiniz. Öğrenirken böylesi, yazdığınız kodu her defasında derleyiciye verip derlendikten sonra çalıştırmaktan daha kolay ve hızlıdır. Komut satırına `ghci` yazarak GHC'nin etkileşimli haline ulaşabilirsiniz. Eğer bir dosyada bazı fonksiyonlar yazdıysanız ve onlara ulaşmak isterseniz, diyelim ki etkileşimli hale girdiğiniz klasördeki `myfunctions.hs` dosyanızı etkileşimli hale `:l myfunctions` yazarak yükleyebilir ve içerisindeki fonksiyonları kullanmaya başlayabilirsiniz. Komut dosyanızı değiştirdiğinizde tekrar `:l myfunctions` yazarak veya `:r` yazarak, komut dosyanızı yeniden yükletebilirsiniz. Benim için alışıldık çalışma şekli, bir `.hs` dosyasındaki fonksiyonları kurcalamak istediğimde etkileşimli hale komut dosyamı yüklerim, fonksiyonları deneyerek her türlü pisliği yapar, komut dosyamı tekrar değiştirir ve tekrar yükleyerek böyle devam ederim. Bu dökümanda da aynen bu şekilde yapacağız.
+
+[İçindekiler](readme.md)  [Başla](startingout.md)->
