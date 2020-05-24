@@ -15,7 +15,7 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
 
 İçerik Listesi
 
-- [x] Introduction - @delirehberi
+- [x] [Introduction](introduction.md) - @delirehberi
     - [x] About this tutorial
     - [x] So what's Haskell?
     - [x] What you need to dive in
