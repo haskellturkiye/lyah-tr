@@ -19,7 +19,7 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
     - [x] About this tutorial
     - [x] So what's Haskell?
     - [x] What you need to dive in
-- [ ] Starting Out
+- [ ] [Starting Out](starting-out.md) - @delirehberi
     - [ ] Ready, set, go!
     - [ ] Baby's first functions
     - [ ] An intro to lists
