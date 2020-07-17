@@ -82,3 +82,32 @@ Gördüğünüz gibi. GHCI bu hata mesajında bize, `"llama"` değerinin bir say
 
 Şu ana kadar farketmemiş olabilirsiniz ancak fonksiyonları kullanarak ilerledik. Örneğin, `*` iki sayı alıp bunları çarpan bir fonksiyondur. Gördüğünüz gibi fonksiyonu argümanlar arasına sıkıştırarak çağırabiliyoruz. Bu bizim içek (infix) fonksiyon dediğimiz şey. Sayılarla kullanılmayan fonksiyonların çoğusu önek(prefix) fonksiyondur. Hadi onlara bakalım.
 
+Fonksiyonlar genelde önek fonkiyondur. Buradan itibaren kullanacağımız fonksiyonların önek formu olduğunu belirtmeyeceğiz,öyle varsayacağız. Çoğu imperatif dilde fonksiyonlar, fonksiyon adı yazdıktan sonra parametreleri parantezler içerisinde genelle virgülle ayırıp vererek çalışır. Haskell'de ise sadece fonksiyon adı yazılır, bir boşluk konur ve sonrasında boşlukla ayırarak parametreler verilir. Başlangıç olarak, Haskell'deki en sıkıcı fonksiyonlardan birini deneyeceğiz.
+
+```
+ghci> succ 8
+9
+```
+
+`succ` fonksiyonu ardılanabilme özelliğine sahip bir şey alır ve onun ardılını döner. Görebileceğiniz gibi sadece fonksiyon adı ve parametreyi bir boşlukla ayırdık. Birden fazla parametreyle fonksiyon çağırmak da çok basittir. `min` ve `max` fonksiyonları sıraya konabilir iki şey alır (sayılar gibi!). `min` en küçük olanı ve `max` ise en büyük olanı döner. Kendiniz deneyin;
+
+```
+ghci> min 9 10  
+9  
+ghci> min 3.4 3.2  
+3.2  
+ghci> max 100 101  
+101
+```
+
+Fonksiyon uygulama(fonksiyonu ve boşluklar bırakarak parametrelerini ekleyerek çağırma) en üst önceliğe sahiptir. Bunun anlamı aşağıdaki iki şeyin aynı olduğudur.
+
+```
+ghci> succ 9 + max 5 4 + 1  
+16  
+ghci> (succ 9) + (max 5 4) + 1  
+16  
+```
+
+Yine de, eğer 9 ile 10 sayısının çarpımının ardılını istiyorsak, sadece `succ 9 * 10` yazamayız çünkü bu işlem 9'un ardılını alıp 10 ile çarpacaktır. Yani sonuç 100 olacaktır. `succ (9 * 10)` yazarak 91 sonucuna ulaşabiliriz.
+
