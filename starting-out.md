@@ -111,3 +111,7 @@ ghci> (succ 9) + (max 5 4) + 1
 
 Yine de, eğer 9 ile 10 sayısının çarpımının ardılını istiyorsak, sadece `succ 9 * 10` yazamayız çünkü bu işlem 9'un ardılını alıp 10 ile çarpacaktır. Yani sonuç 100 olacaktır. `succ (9 * 10)` yazarak 91 sonucuna ulaşabiliriz.
 
+Eğer bir fonksiyon iki parametre alıyorsa, fonksiyon adını tırnak işaretleriyle sararak içek fonksiyon gibi kullanabiliriz. Örneğin, `div` fonsiyonu iki parametre bekliyor ve aldığı parametrelere bölme işlemi uyguluyor. `div 92 10` işlemi 9 sonucunu dönüyor. Ancak bu şekilde kullanım, hangi sayının hangi sayıya bölündüğü konusunda kafa karıştırıcı olabilir. Bu yüzden içek fonksiyon olarak şöyle yazabiliriz ``92 `div` 10`` ve bu kesinlikle daha temiz olur. 
+
+İmperatif dillerden gelen insanlar bu parantez kullanımı konusunda kafa karışıklığı yaşarlar. Örneğin, C dilinde, fonksiyonları çağırmak için parantezleri şöyle kullanırsınız `foo()`,`bar(1)` veya `baz(3, "haha")`. Daha önce söylediğimiz gibi Haskell'de boşlukları fonksiyon uygulama için kullanıyoruz. Yani Haskell'de bu fonksiyonlar `foo`, `bar 1` ve `baz 3 "haha"` olarak kullanılıyor. Eğer şöyle birşey görürseniz `bar (bar 3)`, bu `bar` fonksiyonunun `bar` ve `3` değerlerini parametre olarak aldığı anlamına gelmez. Bunun anlamı, önce `bar` fonksiyonunu `3` parametresi ile çağır ve dönen sonucu da tekrar `bar` fonksiyonuna ver demekdir. C dilinde bunun karşılığı `bar(bar(3))` olacaktır.
+
