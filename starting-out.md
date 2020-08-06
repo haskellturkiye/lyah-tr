@@ -115,3 +115,41 @@ Eğer bir fonksiyon iki parametre alıyorsa, fonksiyon adını tırnak işaretle
 
 İmperatif dillerden gelen insanlar bu parantez kullanımı konusunda kafa karışıklığı yaşarlar. Örneğin, C dilinde, fonksiyonları çağırmak için parantezleri şöyle kullanırsınız `foo()`,`bar(1)` veya `baz(3, "haha")`. Daha önce söylediğimiz gibi Haskell'de boşlukları fonksiyon uygulama için kullanıyoruz. Yani Haskell'de bu fonksiyonlar `foo`, `bar 1` ve `baz 3 "haha"` olarak kullanılıyor. Eğer şöyle birşey görürseniz `bar (bar 3)`, bu `bar` fonksiyonunun `bar` ve `3` değerlerini parametre olarak aldığı anlamına gelmez. Bunun anlamı, önce `bar` fonksiyonunu `3` parametresi ile çağır ve dönen sonucu da tekrar `bar` fonksiyonuna ver demekdir. C dilinde bunun karşılığı `bar(bar(3))` olacaktır.
 
+
+## Bebeğin ilk fonksiyonları
+
+Önceki bölümde fonksiyon çağrımıyla ilgili temel içgüdüleri edindik. Şimdi kendi fonksiyonlarımızı yazma zamanı. Dosya editörünüzü açın ve şu bir sayı alıp kendiyle toplayan fonsiyonu yapıştırın.
+
+```
+doubleMe x = x + x
+```
+
+Fonksiyonlar çağrım şekillerine benzer şekilde tanımlanır. Boşlukla ayrılmış parametreler fonksiyon adını takip eder. Ama fonksiyonları tanımlarken, tanımladığımız fonksiyondan sonra bir `=` işareti vardır. Bu dosyayı `baby.hs` veya başka bir isimle kaydedin. Dosyanın olduğu konuma gidin ve `ghci` komutunu çalıştırın. GHCI'ın içine girdiğinizde `:l baby` komutunu çalıştırın. Şimdi bizim kodumuz yüklendi ve fonksiyonla oynayabiliriz.
+
+```
+ghci> :l baby  
+[1 of 1] Compiling Main             ( baby.hs, interpreted )  
+Ok, modules loaded: Main.  
+ghci> doubleMe 9  
+18  
+ghci> doubleMe 8.3  
+16.6   
+```
+
+`+` fonksiyonu integer'ler için olduğu kadar kayan noktalı sayılarla da (sayı özelliği gösteren herhangi başka şeyle de) gayet iyi çalıştığı için fonksiyonumuz herhangi bir sayıyla çalışacaktır. Hadi iki sayı alıp, her birini ikiyle çarpıp sonra birbiriyle toplayan bir fonksiyon daha yazalım.
+
+```
+doubleUs x y = x*2 + y*2   ,
+```
+
+Basit. Ayrıca şu şekilde de yapabilirdik `doubleUs x y = x + x + y + y`. Bu fonksiyonu da test etmek tahmin edebileceğiniz sonucu verecektir. (`baby.hs` dosyasına fonksiyonu eklemeyi, kaydettikten sonra GHCI içinde `:l baby` diyerek yüklemeyi unutmayın)
+
+```
+ghci> doubleUs 4 9  
+26  
+ghci> doubleUs 2.3 34.2  
+73.0  
+ghci> doubleUs 28 88 + doubleMe 123  
+478
+```
+
