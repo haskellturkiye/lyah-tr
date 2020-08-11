@@ -153,3 +153,22 @@ ghci> doubleUs 28 88 + doubleMe 123
 478
 ```
 
+Bekleneceği gibi kendi fonksiyonlarınızı, yazdığının diğer fonksiyolardan da çağırabilirsiniz. Yeri gelmişken `doubleUs` fonksiyonumuz tekrar tanımlayabiliriz.
+
+```
+doubleUs x y = doubleMe x + doubleMe y
+```
+
+Bu Haskell boyunca göreceğiniz yaygın kullanımın temel bir örneği. Temel ve basit fonksiyonlar oluşturmak ve bunları birleştirerek karmaşık fonksiyonlar oluşturmak en açık ve doğru kullanımdır. Bu yöntem ayrıca kendini tekrarlamayı engeller. Bazı matematikciler buradaki 2'nin aslında 3 olması gerektiğini farketse ve programınızı güncellemeniz gerekse ne yapacaksınız? Yalnızca `doubleMe` fonksiyonunu `x + x + x` olarak yeniden tanımlayıp `doubleUs` fonksiynu `doubleMe` fonksiyonu çağırdığı için, 2'lerin artık 3 olduğu garip dünyada otomatik olarak kodunuz çalışacaktır.
+
+Haskell'de fonksiyonların özel bir sıralaması yoktur. Yani `doubleMe` veya `doubleUs` fonksiyonunu daha önce tanımlamış olmanız programın çalışmasını etkilemez.
+
+Şimdi verilen sayıyı 2 ile çarpan bir fonksiyon yazacağız ancak bu fonksiyon sadece 100 veya daha küçük sayılar için çalışacak, çünkü 100 zaten yeterince büyük bir sayı!
+
+```
+doubleSmallNumber x = if x > 100  
+                        then x  
+                        else x*2
+```
+
+
