@@ -171,4 +171,18 @@ doubleSmallNumber x = if x > 100
                         else x*2
 ```
 
+  Tam burada Haskell'in `if` ifadesini tanıtıyoruz. Kuvvetle muhtemel diğer dillerden `if` ifadesine aşinalığınız vardır. Haskell'in `if` ifadesi ile diğer imperatif dillerin `if` ifadesi arasındaki tek fark, Haskell'de `else` kısmı zorunludur. İmperatif dillerde `if` koşulu sağlanmadığında kod bu kısımları atlayabilir ancak Haskell'de her ibare(expression) ve fonksiyon bir değer dönmek zorundadır. Ayrıca `if` ifadesini tek satırda yazabiliriz ancak bu halini daha okunabilir buluyorum. `if` ifadesi hakkındaki bir başka şey ise Haskell bunun bir ibare(expression) olduğudur. Bir ibare basitce, bir değer dönen herhangi bir kod parçası demektir. `5` bir ibaredir çünkü 5 dönmektedir, `4+8` bir ibaredir, `x + y` bir ibaredir çünkü `x` ve `y`'nin toplamını döner. `else` kısmını mecburi olması sebebiyle `if` ifadesi her zaman bir değer dönecektir ve bu yüzden de bir ibaredir. Eğer bir önceki fonksiyonumuzun sonucunda oluşan sayıya bir eklemek isterse, şöyle bir şey yazabiliriz.
 
+```
+doubleSmallNumber' x = (if x > 100 then x else x*2) + 1
+```
+
+Parantezleri eklemeseydik, bu fonksiyon sadece `x` 100'den büyük olmadığında değere 1 ekleyecekti. Fonskiyon isminin sonundaki `'` işaretine dikkat edin. Bu tırnak işaretinin Haskell'de herhangi bir özel anlamı yoktur. Fonksiyon isimlerinde kullanılabilen geçerli bir karakterdir. Biz genelde `'` işaretini bir fonksiyonun veya değişkenin katı versionunu (tembel olmayan) belirtmek için veya hafifçe değiştirilmiş versiyonunu isimlendirmek için kullanıyoruz. Çünkü `'` işareti fonksiyonlarda geçerli bir karakterdir, şöyle bir fonksiyon oluşturabiliriz.
+
+```
+conanO'Brien = "It's a-me, Conan O'Brien!"
+```
+
+Burada dikkate değer iki şey var. Birincisi Conan'ın ismini fonksiyon ismi olarak kullanırken büyük harfle başlayarak yazmadık. Çünkü fonksiyon isimleri büyük harfle başlayamaz. Sebebini daha sonra göreceğiz. İkincisi ise fonksiyon hiç parametre almıyor. Bir fonksiyon parametre almadığında genelde biz ona tanım(definition) veya isim(name) deriz.Çünkü verdiğimiz ismi (ve fonksiyonları) tanımladıktan sonra değiştiremeyiz. `conanO'Brien` ve değeri `"It's a-me, Conan O'Brien!"` birbiriyle değiştirilebilir şeylerdir.
+
+## Listelere giriş
