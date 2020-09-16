@@ -186,3 +186,90 @@ conanO'Brien = "It's a-me, Conan O'Brien!"
 Burada dikkate değer iki şey var. Birincisi Conan'ın ismini fonksiyon ismi olarak kullanırken büyük harfle başlayarak yazmadık. Çünkü fonksiyon isimleri büyük harfle başlayamaz. Sebebini daha sonra göreceğiz. İkincisi ise fonksiyon hiç parametre almıyor. Bir fonksiyon parametre almadığında genelde biz ona tanım(definition) veya isim(name) deriz.Çünkü verdiğimiz ismi (ve fonksiyonları) tanımladıktan sonra değiştiremeyiz. `conanO'Brien` ve değeri `"It's a-me, Conan O'Brien!"` birbiriyle değiştirilebilir şeylerdir.
 
 ## Listelere giriş
+
+Gerçek dünyadaki alışveriş listelerine benzer şekilde, Haskell'de de listeler çok kullanışlıdır. Bu çok kullanışlı bir veri yapısıdır ve yığınla farklı yolla bir çok farklı sorunun çözümü ve modeli için çok kullanılır. Listeler ÇOK müthiştir! Bu bölümde listelerin, stringlerin (ki onlar da listedir) ve liste kavrayıcılarının (list comprehensions) temellerine değineceğiz.
+
+ Haskell'de, listeler _homojen_ veri yapılarıdır. Aynı türde bir çok element saklarlar. Bunun anlamı, sayı listeleri veya karakter listeleri yapabileceğimiz ama biraz karakter biraz sayı içeren listeler yapamayacağımızdır. Ve şimdi, listeler!
+
+  > Not: GHCI içerisinde `let` kelimesini tanımlama için kullanabiliriz. GHCI'da `let a = 1` yazmak, dosya içinde `a = 1` yazmak ve yüklemek ile aynıdır.
+
+```
+ghci> let lostNumbers = [4,8,15,16,23,42]  
+ghci> lostNumbers  
+[4,8,15,16,23,42]
+```
+
+Görebileceğiniz gibi, listeler köşeli parantez ile oluşturulur ve içerisindeki veri virgüller ile ayrılır. Eğer şu şekilde bir liste oluşturmayı denersek; `[1,2,'a',3,'b','c',4]`, Haskell bu sayı olmayan karakterler (karakterler tek tırnak içinde yazılır) için mızmızlanacaktır. Karakterler demişken, `string`ler yalnızca karakterlerden oluşan listedirler. `"hello"` sadece `['h','e','l','l','o']` için bir alternatif yazım şeklidir. Çünkü stringler listedirler, liste fonksiyonlarını bunlar üzerinde de kullanabiliriz ki bu çok kullanışlıdır.
+
+Genel bir iş iki listeyi birleştirmektir. Bu `++` operatörü yardımıyla yapılabilir.
+
+```
+ghci> [1,2,3,4] ++ [9,10,11,12]  
+[1,2,3,4,9,10,11,12]  
+ghci> "hello" ++ " " ++ "world"  
+"hello world"  
+ghci> ['w','o'] ++ ['o','t']  
+"woot"
+```
+
+Uzun stringlerde `++` operatörünü kullanırken dikkatli olun. İki listeyi birleştireceğinizde (bu tek elemanlı bir listeyi bir listeye ekleme olsa bile, örneğin; `[1,2,3] ++ [4]`), içerde, Haskell sol taraftaki tüm listeyi gezecek ve `++` operatörünü koyacağı yere kadar gidecektir. Bu çok büyük olmayan listeler için sorun değildir. Ancak 50 milyon girdili bir listenin sonuna bir şey eklemek çok uzun sürecektir. Buna rağmen, bir listenin başına `:` operatörünü(cons operatörü de denir) kullanarak bir şey eklemek hemencecik gerçekleşir.
+
+```
+ghci> 'A':" SMALL CAT"  
+"A SMALL CAT"  
+ghci> 5:[1,2,3,4,5]  
+[5,1,2,3,4,5]  
+```
+
+`++` operatörü iki liste alırken, `:` operatörünün nasıl da bir sayı ve sayı listesi veya bir karakter ve karakter listesi aldığına dikkat edin. Bir listenin sonuna `++` ile tek eleman bile eklemek isteseniz, köşeli parantezler ile o elemanı bir listeye dönüştürmeniz gerekir.
+
+`[1,2,3]` gerçekte `1:2:3:[]` için bir alternatif yazım şeklidir. `[]` boş bir listedir. Boş listenin önüne `3` eklersek bu `[3]` e dönüşür. Eğer listenin önüne `2` eklersek bu `[2,3]` e dönüşür ve böyle gider.
+
+> Not: `[]`,`[[]]`, ve `[[],[],[]]` farklı şeylerdir. Birincisi boş bir liste, ikincisi boş bir liste içeren bir liste, üçüncüsü ise boş listeler içeren bir listedir.
+
+Eğer bir listeden yerini belirterek bir eleman almak isterseniz `!!` kullanın. Yerler 0'dan başlıyor.
+
+```
+ghci> "Steve Buscemi" !! 6  
+'B'  
+ghci> [9.4,33.2,96.2,11.2,23.25] !! 1  
+33.2
+```
+
+Ancak dört elemanı bulunan bir listeden altıncı elemanı almaya çalışırsanız hata alacaksınızdır, dikkatli olun.
+
+Listeler ayrıca listeler içerebilir. Ayrıca liste içeren liste içeren liste içeren ... listeler olabilir.
+
+```
+ghci> let b = [[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]  
+ghci> b  
+[[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]  
+ghci> b ++ [[1,1,1,1]]  
+[[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3],[1,1,1,1]]  
+ghci> [6,6,6]:b  
+[[6,6,6],[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]  
+ghci> b !! 2  
+[1,2,2,3,4]
+```
+
+Liste içeren listeler farklı boyutlarda olabilir ancak farklı türlerde olamazlar. Biraz karakter biraz sayı içeren listeler olmayacağı gibi biraz karakter listesi biraz da sayı listesi içeren listeler olamaz.
+
+Listenin içerisindeki elemanlar karşılaştırılabilir olduğu sürece listeler de karşılaştırılabilirdirler. `<`,`<=`,`>`, ve `>=` kullanarak listeleri karşılaştırdığınızda, içindeki elemenlar sıralı olarak karşılaştırılacaktır. İlk olarak baştakiler karşılaştırılacaktır. Eğer eşitlerse ikinci elemanlar ve böyle devam edecektir.
+
+```
+ghci> [3,2,1] > [2,1,0]  
+True  
+ghci> [3,2,1] > [2,10,100]  
+True  
+ghci> [3,4,2] > [3,4]  
+True  
+ghci> [3,4,2] > [2,4]  
+True  
+ghci> [3,4,2] == [3,4,2]  
+True
+```
+
+Listelerle başka neler yapılabilir? Burada listelerde kullanabileceğiniz bazı temel fonksiyonlar bulunuyor.
+
+
+
