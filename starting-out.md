@@ -271,5 +271,130 @@ True
 
 Listelerle başka neler yapılabilir? Burada listelerde kullanabileceğiniz bazı temel fonksiyonlar bulunuyor.
 
+`head` liste alır ve liste başındaki elemanı döner. 
+
+```
+ghci> head [5,4,3,2,1]  
+5
+```
+
+`tail` liste alır ve listenin kuyruğunu döner. Bir başka deyişle ilk elemanı çıkartıp kalan eleman listesini döner.
+
+```
+ghci> tail [5,4,3,2,1]  
+[4,3,2,1]
+```
+
+`last` liste alır ve son elemanını döner.
+
+```
+ghci> last [5,4,3,2,1]  
+1
+```
+
+`init` liste alır ve son eleman hariç tüm elemanları döner.
+
+```
+ghci> init [5,4,3,2,1]  
+[5,4,3,2]
+```
+
+Eğer listeyi bir eleman olarak düşünürseniz şöyle gözükür;
+
+![list](https://s3.amazonaws.com/lyah/listmonster.png)
+
+Peki ya boş bir listenin ilk elemanını almaya çalışırsanız ne olur?
+
+```
+ghci> head []  
+*** Exception: Prelude.head: empty list  
+```
+
+Hadi be! Yüzümüzde patladı. Eğer bir canavar yoksa, o canavarın kafası da yoktur. `head`,`tail`,`last`,`init` kullandığınızda, listelerin boş olmadığından emin olmalısınız. Bu hata derlenme zamanında ortaya çıkmaz, yani en iyisi Haskell'e boş bir listeden eleman getir demeden önce gerekli önlemleri almak gerekir.
+
+`length` liste alır ve anlaşılacağı üzere o listenin boyutunu döner.
+
+```
+ghci> length [5,4,3,2,1]  
+5
+```
+
+`null` listenin boş olup olmadığını kontrol eder. Eğer boşsa `True`, en az bir elemanı varsa `False` döner. `xs == []` yerine bunu kullanın. (eğer xs bir listeyse)
+
+```
+ghci> null [1,2,3]  
+False  
+ghci> null []  
+True
+```
+
+`reverse` listeyi ters çevirir.
+
+```
+ghci> reverse [5,4,3,2,1]  
+[1,2,3,4,5]
+```
+
+`take` bir numara ve bir liste alır. Listenin başından itibaren verilen sayıda elemanı getirir.
+
+```
+ghci> take 3 [5,4,3,2,1]  
+[5,4,3]  
+ghci> take 1 [3,9,3]  
+[3]  
+ghci> take 5 [1,2]  
+[1,2]  
+ghci> take 0 [6,6,6]  
+[]
+```
+
+Boyutundan daha fazla eleman istediğimizde dönen sonuca bakın, verdiğimiz listeyi geri döndürüyor. Eğer 0 eleman istersek boş bir liste alırız.
+
+`drop` benzer şekilde çalışır, sadece verdiğimiz sayı kadar elemanı listeden çıkartıp kalanı döner.
+
+```
+ghci> drop 3 [8,4,2,1,5,6]  
+[1,5,6]  
+ghci> drop 0 [1,2,3,4]  
+[1,2,3,4]  
+ghci> drop 100 [1,2,3,4]  
+[]   
+```
+
+`maximum` sıralanabilir türde şeylerden oluşan bir liste alır ve en büyüğünü döner.
+
+`minimum` en küçüğünü döner.
+
+```
+ghci> minimum [8,4,2,1,5,6]  
+1  
+ghci> maximum [1,9,2,3,4]  
+9
+```
+
+`sum` sayı listesi alır ve bunların toplamını döner.
+
+`product` bir sayı listesi alır ve bunların çarpımını döner.
+
+```
+ghci> sum [5,2,1,6,3,2,5,7]  
+31  
+ghci> product [6,2,1,2]  
+24  
+ghci> product [1,2,5,6,7,9,2,0]  
+0
+```
+
+
+`elem` bir şey ve bir şeyler şistesi alır ve bize o şeyin listenin bir elemanı olup olmadığını söyler. Genellikle içek(infix) fonksiyon olarak kullanılır çünkü okuması daha kolaydır.
+
+```
+ghci> 4 `elem` [3,4,5,6]  
+True  
+ghci> 10 `elem` [3,4,5,6]  
+False  
+```
+
+Bunlar listelerde kullanabileceğiniz bir kaç basit fonksiyon. Daha sonra daha fazla fonksiyon inceleyeceğiz.
 
 
