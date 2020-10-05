@@ -67,3 +67,23 @@ Char karakterleri temsil eder. Tek tırnaklar arasına yazılır. Karakter liste
 Tuple'lar veya çokuzluların tipi uzunluklarına ve içerdikleri değerlerin tipine bağlıdır. Bu yüzden teorik olarak sonsuz sayıda farklı tuple tipi vardır ve bunların her birine bu kitapta değinemeyiz. Bunlar arasından boş tuple olan () aynı zamanda bir tiptir ve tip olan () mümkün olan tek bir değer barındırır: ()
 
 ## Tip değişkenleri
+
+head fonksiyonun tipi sizce ne olabilir? Bu fonksiyon bize herhangi bir listenin ilk elemanını veriyor. Öyleyse tipi ne olabilir? Bakalım!
+
+```
+    :t head
+    head :: [a] -> a
+```
+
+Peki buradaki a nedir? Bir tipse neyin tipidir? Hatırlarsanız tip isimleri büyük harfle başlıyordu, öyleyse a bir tip olamaz. Öyleyse a nedir sorusunu cevaplayalım: a bir tip değişkenidir, yani a herhangi bir tip olabilir. Bu biraz diğer dillerdeki *generics* özelliğine benziyor, ama tip değişkenleri Haskell'de belli bir tipin özelliklerinden faydalanmayan genel fonksiyonlar yazmamızı oldukça kolaylaştırdığı için *generics*ten çok daha güçlüdür diyebiliriz. Tipinde tip değişkenleri olan fonksiyonlara polymorphic fonksiyon diyoruz. head fonksiyonunun tipi bize bu fonksiyonun herhangi bir tipte elemanları olan bir liste kabul ettiği ve sonuç olarak bu tipe sahip bir eleman verdiğini gösteriyor.
+
+Tip değişkenleri bir karakterden daha uzun isimlere sahip olabilir, ancak yine de genellikle a, b, c, d gibi tek harfli isimler tercih ediyoruz.
+
+fst fonksiyonunu hatırlıyor musunuz? Bu fonksiyon herhangi bir sıralı ikilinin ilk elemanını almaya yarıyordu. Hemen tipine bakalım.
+
+```
+    :t st
+    fst :: (a, b) -> a
+```
+
+fst fonksiyonunun içinde iki tip olan bir tuple alıp tupleın ilk elemanı ile aynı tipte bir eleman döndüğünü görüyoruz. a ve b birbirinden bağımsız olduğu için fonksiyonu uyguladığımız sıralı ikilinin elemanlarının tiplerinin aynı olmak zorunda olmadığı gibi farklı olmak zorunda da olmadığını belirtmiş oluyoruz.
