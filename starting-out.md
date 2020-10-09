@@ -397,4 +397,96 @@ False
 
 Bunlar listelerde kullanabileceğiniz bir kaç basit fonksiyon. Daha sonra daha fazla fonksiyon inceleyeceğiz.
 
+## Texas Aralıkları
+
+Peki ya 1 ile 20 arasındaki tüm sayıları istiyorsak ne yapacağız? Peki, açıkca görüleceği gibi, kendisinden mükemmelik beklenen yazılım dilleri için tümünü tek tek yazmak pek doğru olmayacaktır. Bunun yerine, aralıkları kullanacağız. Aralıklar, aritmetik sıralı elemanlar içeren listeler oluşturmak için bir yoldur. Sayılar oluşturulabilir(enumaration). Bir, iki, üç, dört vb. Karakterler aynı şekilde oluşturulabilir. Alfabe, harflerin A'dan Z'ye sıralı halidir. İsimler oluşturulamaz. "John" isminden sonra ne gelir? Ne bileyim!
+
+1 ile 20 arasındaki doğal sayıları içeren bir liste oluşturmak için `[1..20]` yazmanız yeterlidir. Şuna denktir `[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]` ve biriyle diğeri arasında, uzunca yazmanın aptalca olması dışında bir fark yoktur.
+
+```
+ghci> [1..20]  
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]  
+ghci> ['a'..'z']  
+"abcdefghijklmnopqrstuvwxyz"  
+ghci> ['K'..'Z']  
+"KLMNOPQRSTUVWXYZ"
+```
+
+Aralıklar kallavidir çünkü aralığa adım da tanımlayabilirsiniz. Sadece 1 ile 20 arasındaki çift sayıları almak isterseniz ne olacak? Ya da 1 ile 20 arasındaki her üçüncü sayıyı?
+
+```
+ghci> [2,4..20]  
+[2,4,6,8,10,12,14,16,18,20]  
+ghci> [3,6..20]  
+[3,6,9,12,15,18]
+```
+
+Bu sadece ilk ve ikinci elemanı virgülle ayırıp adım limitinize belirtmekle çözülen bir sorundur. Aralıklar akıllıdır ama gözünüzde çok büyütmeyin. `[1,2,4,8,16..100]` yazıp her elemanın ikinci katını almasını bekleyemezsiniz. İlk olarak, yalnızca bir adım belirtebilirsiniz. Ve bazı sıralı listeler, bir kaç eleman verip aritmetik olarak tamamlanabilecek kadar belirli değildir.
+
+20'den 1'e kadar sayı listesi isterseniz `[20..1]` yazamazsınız, `[20,19..1]` yazmanız gerekir.
+
+Bir de noktalı sayı verdiğinizde aralıkların nasıl davrandığını görün. Çünkü tanım itibariyle bunlar tam kesin değildir, bunları aralıklarda kullanmak bazı şapşik sonuçlar doğurabilir.
+
+```
+ghci> [0.1, 0.3 .. 1]  
+[0.1,0.3,0.5,0.7,0.8999999999999999,1.0999999999999999]
+```
+
+Benim tavsiyem, aralıklarda noktalı sayıları kullanmamaktır.
+
+Üst limit belirtmeden aralığı sonsuz olarak kullanabilirsiniz. Sonsuz listeler konusuna daha sonra detaylıca değineceğiz. Şimdilik, 13'ün katlarının ilk 24 tanesini alalım. Tabi ki `[13,26..24*13]` şeklinde de yapabilirsiniz. Ama daha iyi bir yolu var: `take 24 [13,26..]`. Çünkü Haskell tembeldir, sonsuz listeyi hesaplamayı denemeyecektir, nasılsa bitmeyecek. Sizin sonsuz listenin ne kadarı istediğinizi duyana kadar bekler. Ve burada sizin ilk 24 elemanı istediğinizi bilir ve memnuniyetle verir.
+
+Sonsuz listeler için işe yarar fonksiyonlar:
+
+`cycle` liste alır ve tekrarlayan sonsuz bir liste üretir. Eğer görüntülemeye çalışırsanız sonsuza kadar tekrarlı olarak listeyi döner, bu sebeple bi noktada kesmeniz gerekir.
+
+```
+ghci> take 10 (cycle [1,2,3])  
+[1,2,3,1,2,3,1,2,3,1]  
+ghci> take 12 (cycle "LOL ")  
+"LOL LOL LOL "
+```
+
+`repeat` bir eleman alır ve onu sonsuza kadar tekrarlar. Listeyi tekrarlamak gibidir ama tek eleman için çalışır.
+
+```
+ghci> take 10 (repeat 5)  
+[5,5,5,5,5,5,5,5,5,5]  
+```
+
+Tabi ki `replicate` fonksiyonu ile aynı elemanda belirli bir sayıda elde etmek daha kolaydır. `replicate 3 10` size `[10,10,10]` çıktısını döndürür.
+
+` yazmanız gerekir.
+
+Bir de noktalı sayı verdiğinizde aralıkların nasıl davrandığını görün. Çünkü tanım itibariyle bunlar tam kesin değildir, bunları aralıklarda kullanmak bazı şapşik sonuçlar doğurabilir.
+
+```
+ghci> [0.1, 0.3 .. 1]  
+[0.1,0.3,0.5,0.7,0.8999999999999999,1.0999999999999999]  
+```
+
+Benim tavsiyem, aralıklarda noktalı sayıları kullanmamaktır.
+
+Üst limit belirtmeden aralığı sonsuz olarak kullanabilirsiniz. Sonsuz listeler konusuna daha sonra detaylıca değineceğiz. Şimdilik, 13'ün katlarının ilk 24 tanesini alalım. Tabi ki `[13,26..24*13]` şeklinde de yapabilirsiniz. Ama daha iyi bir yolu var: `take 24 [13,26..]`. Çünkü Haskell tembeldir, sonsuz listeyi hesaplamayı denemeyecektir, nasılsa bitmeyecek. Sizin sonsuz listenin ne kadarı istediğinizi duyana kadar bekler. Ve burada sizin ilk 24 elemanı istediğinizi bilir ve memnuniyetle verir.
+
+Sonsuz listeler için işe yarar fonksiyonlar:
+
+`cycle` liste alır ve tekrarlayan sonsuz bir liste üretir. Eğer görüntülemeye çalışırsanız sonsuza kadar tekrarlı olarak listeyi döner, bu sebeple bi noktada kesmeniz gerekir.
+
+```
+ghci> take 10 (cycle [1,2,3])  
+[1,2,3,1,2,3,1,2,3,1]  
+ghci> take 12 (cycle "LOL ")  
+"LOL LOL LOL "
+```
+
+`repeat` bir eleman alır ve onu sonsuza kadar tekrarlar. Listeyi tekrarlamak gibidir ama tek eleman için çalışır.
+
+```
+ghci> take 10 (repeat 5)  
+[5,5,5,5,5,5,5,5,5,5]  
+```
+
+Tabi ki `replicate` fonksiyonu ile aynı elemanda belirli bir sayıda elde etmek daha kolaydır. `replicate 3 10` size `[10,10,10]` çıktısını döndürür.
+
 
