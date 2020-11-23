@@ -26,9 +26,9 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
     - [x] Texas ranges
     - [ ] I'm a list comprehension
     - [ ] Tuples
-- [ ] Types and Typeclasses
-    - [ ] Believe the type
-    - [ ] Type variables
+- [ ] Types and Typeclasses - @koluacik
+    - [x] Believe the type
+    - [x] Type variables
     - [ ] Typeclasses 101
 - [ ] Syntax in Functions
     - [ ] Pattern matching
