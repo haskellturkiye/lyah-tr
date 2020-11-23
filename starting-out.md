@@ -489,4 +489,41 @@ ghci> take 10 (repeat 5)
 
 Tabi ki `replicate` fonksiyonu ile aynı elemanda belirli bir sayıda elde etmek daha kolaydır. `replicate 3 10` size `[10,10,10]` çıktısını döndürür.
 
+## Ben liste kavrayıcısıyım (list comprehension)
+
+Eğer matematik eğitimi aldıysanız, muhtemelen küme kavrayıcılarını (set comprehension) duymuşsunuzdur. Normalde, genel kümelerin dışında, daha özelleşmiş kümeler oluşturmak için kullanılır. Doğal sayılar kümesinin ilk 10 sayısını ikiyle çarpımından oluşan listeyi veren basit bir kavrayıcı şu şekilde yazılabilir: `S = { 2 ⋅ x ∣ x ∈ N , x ≤ 10}`. Boru(pipe)dan önceki kısım çıktı fonksiyonudur, `x` değişkendir, `N` girdi kümesidir ve `x ≤ 10` sonlanma koşuludur. Bunun anlamı, sonlanma koşulu sağlayana kadar tüm doğal sayılar kümesinin her elemanı ikiyle çarpılacak ve sonuç listesi alınacaktır.
+
+Bunu Haskell'de yazmak istersek, şöyle birşey yapabilirdik; `take 10 [2,4..]`. Peki ya biz sadece ilk 10 sayının ikiyle çarpımını içeren değil de daha karmaşık bir işlem sonucu üretilen kümeyi istiyorsak? Liste kavrayıcılarını bunun için kullanabiliriz. Liste kavrayıcıları, küme kavrayıcılarına çok benzerler. Şimdilik ilk 10 sayının ikiyle çarpımı sonucu oluşan liste örneğinden gideceğiz.  Kullanabileceğimiz liste kavrayıcısı şudur: `[x*2| x <- [1..10]]`. `x` burada `[1..10]` dan gelen verileri alacak ve bunu ikiyle çarpacağız. Deneyelim;
+
+```
+ghci> [x*2 | x <- [1..10]]  
+[2,4,6,8,10,12,14,16,18,20]
+```
+
+Görebileceğiniz gibi arzu ettiğimiz sonuca ulaştık. Şimdi bu kavrayıcıya bir sonlandırma koşulu ekleyelim. Sonlandırma koşulu atama bölümünden sonra gelir ve virgülle ayrılır. Diyelim ki ikiyle çarpılan sayılardan sadece 12'ye eşit ve büyük sayıları istiyoruz. 
+
+```
+ghci> [x*2 | x <- [1..10], x*2 >= 12]  
+[12,14,16,18,20]
+```
+
+Güzel, çalıştı. Peki ya, 50 ile 100 arası tüm sayıların 7'ye bölümünden sadece 3 kalanları istersem? Kolay.
+
+```
+ghci> [ x | x <- [50..100], x `mod` 7 == 3]  
+[52,59,66,73,80,87,94]   
+```
+
+İşte bu! Kenara yazın, listeye sonlandırma koşulu ekleyerek ayıklamaya `filtreleme(filtering)` de denir. Sayılar listesine baktık ve sonlandırma koşuluna göre listeyi filtreledik.  Şimdi başka bir örnek. Diyelim ki, listedeki tek sayıları alıp, 10dan küçük olanları `BOOM!` büyük olanları `BANG!' ile değiştirecek bir kavrayıcı yazmak istiyoruz. Eğer listedeki sayı tek değilse liste dışına iteceğiz. Kolaylık olsun diye kavrayıcıyı bir fonksiyon olarak yazacağız bu şekilde daha sonra kolayca kullanabiliriz.
+
+```
+boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]   
+```
+
+Kavrayıcının son kısmı sonlandırma koşulu. `odd` fonksiyonu eğer verilen sayı tek sayı ise `True` değilse `False` döner. Listeye eklenecek elemanlar sadece sonlandırma koşulu `True` oldukça mümkündür.
+
+```
+ghci> boomBangs [7..13]  
+["BOOM!","BOOM!","BANG!","BANG!"]   
+```
 
