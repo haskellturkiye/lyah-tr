@@ -20,10 +20,10 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
     - [x] So what's Haskell?
     - [x] What you need to dive in
 - [ ] [Starting Out](starting-out.md) - @delirehberi
-    - [ ] Ready, set, go!
-    - [ ] Baby's first functions
-    - [ ] An intro to lists
-    - [ ] Texas ranges
+    - [x] Ready, set, go!
+    - [x] Baby's first functions
+    - [x] An intro to lists
+    - [x] Texas ranges
     - [ ] I'm a list comprehension
     - [ ] Tuples
 - [ ] Types and Typeclasses
