@@ -24,7 +24,7 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
     - [x] Baby's first functions
     - [x] An intro to lists
     - [x] Texas ranges
-    - [ ] I'm a list comprehension
+    - [x] I'm a list comprehension
     - [ ] Tuples
 - [ ] Types and Typeclasses - @koluacik
     - [x] Believe the type
