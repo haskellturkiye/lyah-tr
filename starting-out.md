@@ -527,3 +527,68 @@ ghci> boomBangs [7..13]
 ["BOOM!","BOOM!","BANG!","BANG!"]   
 ```
 
+Pek çok farklı sonlandırma koşulu ekleyebiliriz. 10'dan 20'ye kadar olan sayılardan 13,15,19 hariç olanları seçmek istersek yapabiliriz;
+
+```
+ghci> [ x | x <- [10..20], x /= 13, x /= 15, x /= 19]  
+[10,11,12,14,16,17,18,20]
+```
+
+Liste kavrayıcısında, yalnızca birden fazla sonlandırma koşulu kullanabilmekle kalmayıp (bir eleman mutlaka tüm sonlandırma koşulları sağlamalıdır ki sonuç listesine eklenebilsin), aynı zamanda birden fazla liste kullanarak da liste kavrayıcısını çalıştırabiliriz.Çoklu listelerle çalışırken, kavrayıcı verilen her listenin elemanlarının birbiriyle olan kombinasyonlarına çıktı fonksiyonunu uygulayıp sonuç üretir. Kavrayıcıya verilmiş 4 elemanlı iki listenin filtrelenmemiş sonucunun uzunluğu 16 elemanlı olacaktır. Eğer iki listemiz varsa, diyelim ki `[2,5,10]` ve `[8,10,11]`, biz bu iki listenin mümkün her kombinasyonda elemanlarının birbiriyle çarpımını istersek yapmamız gereken şudur;
+
+```
+ghci> [ x*y | x <- [2,5,10], y <- [8,10,11]]  
+[16,20,22,40,50,55,80,100,110] 
+```
+
+Beklendiği gibi yeni listenin uzunluğu 9 olacaktır. Peki ya 50'den büyük tüm çarpımları isteseydik?
+
+```
+ghci> [ x*y | x <- [2,5,10], y <- [8,10,11], x*y > 50]  
+[55,80,100,110]
+```
+
+Peki ya isim ve sıfatlardan oluşan listeleri karıştıran bir liste kavrayıcısına ne dersiniz? goygoyuna;
+
+```
+ghci> let nouns = ["hobo","frog","pope"]  
+ghci> let adjectives = ["lazy","grouchy","scheming"]  
+ghci> [adjective ++ " " ++ noun | adjective <- adjectives, noun <- nouns]  
+["lazy hobo","lazy frog","lazy pope","grouchy hobo","grouchy frog",  
+"grouchy pope","scheming hobo","scheming frog","scheming pope"]
+```
+
+Biliyorum! Hadi `length` fonksiyonun bize özel halini yazalım. Adına da `length'` diyelim.
+
+```
+length' xs = sum [1 | _ <- xs]
+```
+
+`_` anlamı listeden gelen elemanın ne olduğu benim umrumda değil ve o elemanı kullanmayacağım için değişken ismi vermiyorum demek, bu yüzden sadece `_` yazıyoruz. Bu fonksiyon listedeki her elemanı 1 ile değiştirecek ve çıkan sonucu toplayacak. Bu da bize listemizin uzunluğunu verecek. 
+
+Dostça bir hatırlatma: `string`ler birer listedir, liste kavrayıcılarını `string`leri üretmek ve işlemek için kullanabiliriz. İşte size `string` alan ve büyük harfler dışındaki her elemanı silen bir fonksiyon. 
+
+```
+removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
+```
+
+Deneyelim;
+
+```
+ghci> removeNonUppercase "Hahaha! Ahahaha!"  
+"HA"  
+ghci> removeNonUppercase "IdontLIKEFROGS"  
+"ILIKEFROGS"
+```
+
+Burada tüm işi sonlandırma koşulu yapıyor. Yalnızca `['A'..'Z']` listesinde yer alan elemanların oluşturulacak yeni listeye eklenmesini sağlıyor. Eğer liste içeren listelerle uğraşıyorsanız, iç-içe liste kavrayıcıları da kullanabilirsiniz. Çeşitli sayı listeleri içeren bir listemiz olsun. Listeyi düzleştirmeden tüm tekil sayıları listeden çıkartalım.
+
+```
+ghci> let xxs = [[1,3,5,2,3,1,2,4,5],[1,2,3,4,5,6,7,8,9],[1,2,4,2,1,6,3,1,3,2,3,6]]  
+ghci> [ [ x | x <- xs, even x ] | xs <- xxs]  
+[[2,2,4],[2,4,6,8],[2,4,2,6,2,6]]
+```
+
+Liste kavrayıcılarını satırlara bölebilirsiniz. Eğer GHCi içerisinde değilseniz, uzun listeleri satırlara bölerek liste kavrayıcılara dahil etmek daha iyidir, özellikle de iç-içe listelerle uğraşıyorsanız.
+
+
