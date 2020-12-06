@@ -591,4 +591,139 @@ ghci> [ [ x | x <- xs, even x ] | xs <- xxs]
 
 Liste kavrayıcılarını satırlara bölebilirsiniz. Eğer GHCi içerisinde değilseniz, uzun listeleri satırlara bölerek liste kavrayıcılara dahil etmek daha iyidir, özellikle de iç-içe listelerle uğraşıyorsanız.
 
+## Demetler (Tuples)
+
+Bazı yönlerden demetler, listelere benzerler - çeşitli değerleri bir değişkende tutmayı sağlarlar. Yine de, bir kaç temel fark vardır. Bir sayı listesi, sayılardan oluşan bir listedir. Bunun türü bellidir ve içinde bir veya sonsuz sayıda sayı olması önemli değildir. Fakat Demetler, türleri ve sayısı belli kaç parça kullanacağınıza göre oluşturulur. Parantez işareti ile oluşturulup parçaları virgülle ayrılır. 
+
+Bir diğer önemli fark ise değerlerin homojen olmasının gerekmemesidir. Listelerden farklı olarak, bir demet farklı türleri içerebilir.
+
+Haskell'de iki boyutlu bir vektörü nasıl oluşturduğumuzu bir düşünün. Bir yöntemi liste kullanmak olabilir. Bu işimizi çözer. Peki ya iki boyulu bir yüzeyde, bir şeklin noktalarını ifade eden listeyi içeren vektör çiftlerini istersek? Şöyle bir şey yapabiliriz; `[[1,2],[8,11],[4,5]]`. Buradaki sorun, şu tarz bir şeyin de mümkün olmasıdır; `[[1,2],[8,11,5],[4,5]]`, kaldı ki bu Haskell için bir sorun değildir, çünkü sayı listelerinden oluşan bir liste gayet makuldür, ancak bu konu özelinde mantıksızdır. Ancak iki elemanlı (çift de denir (pair)), bir demetin kendi türü vardır, bu demektir ki birkaç adet çift ve bir kaç adet de üçlü (3 elemanlı demet) içeren bir liste oluşturulamaz. Bu yöntemi bir deneyelim. Vektörleri köşeli parantezlerle çevrelemek yerine, normal parantezleri kullanacağız: `[(1,2),(8,11),(4,5)]`. Peki ya şuna benzer bir şekil oluşturmaya çalışırsak ne olacak; `[(1,2),(8,11,5),(4,5)]`? Şu hatayı alacağız;
+
+```
+Couldn't match expected type `(t, t1)'  
+against inferred type `(t2, t3, t4)'  
+In the expression: (8, 11, 5)  
+In the expression: [(1, 2), (8, 11, 5), (4, 5)]  
+In the definition of `it': it = [(1, 2), (8, 11, 5), (4, 5)]
+```
+
+Bu bize, çiftler ile üçlüleri aynı listede kullandığımızı ve bunun olamayacağını söylüyor. Ayrıca, şöyle bir liste de oluşturamazsınız `[(1,2),("One",2)]` sebebi ise, ilk çifti sayılardan oluşan bir listenin ikinci çiftinin string ve sayıdan oluşamayacağıdır. Demetler veriyi geniş bir çeşitlilikte sunmak için kullanılabilir. Örneğin, Haskell'de eğer birinin ismini ve yaşını tutmak istersek şunun gibi bir üçlü kullanabiliriz; `("Christopher", "Walken", 55)`. Burada da görüleceği gibi demetler liste de içerebilir.
+
+Verinin bir kısmının hangi parçalardan oluştuğunu biliyorsan demetleri kullanırsın. Demetler daha fazla katıdır çünkü her farklı boyuttaki demetin kendi türü vardır, yani bir demete yeni bir eleman ekleyecek bir fonksiyon yazamazsın - çifte eleman ekleyecek fonksiyon, üçlüye eleman ekleyen fonksiyon, dörtlüye eleman ekleyen fonksiyon gibi fonksiyonlar yazmalısın.
+
+Tek elemanlı listeler olsa da tek elemanlı demet diye bir şey yoktur. Düşününce zaten böyle bir şey pek mantıklı da sayılmaz. Tek elemanlı demek sadece kendini içeren bir şey olacaktı ve bize bir faydası olmayacaktı.
+
+Listelerdeki gibi demetler de içerdikleri değerler karşılaştırılabilir olduğu sürece karşılaştırılabilirdir. Fakat farklı boyutlardaki listeleri karşılaştırabileseniz de bu demetler için mümkkün değildir. Çiftler üzerinde kullanmak için iki yararlı fonksiyon:
+
+`fst` bir çift alır ve onun ilk parçasını döner.
+
+```
+ghci> fst (8,11)  
+8  
+ghci> fst ("Wow", False)  
+"Wow"
+```
+
+`snd` bir çift alır ve onun ikinci parçasını döner. Sürpriz!
+
+```
+ghci> snd (8,11)  
+11  
+ghci> snd ("Wow", False)  
+False
+```
+
+Not:  Bu fonksiyonlar sadece çiftlerle çalışır. Üçlüler, dörtlüler, beşliler vb için işe yaramazlar. Demetlerden veri çıkartmayla ilgili detaylara biraz sonra gireceğiz.
+
+Çiftler listesi oluşturan havalı bir fonksiyon: `zip`. İki liste alır ve bu listeleri her listenin bir elemanını diğer listenin elemanıyla eşleştirerek birleştirip tek bir çiftler listesi döner. Gerçekten basit bir fonksiyon ama çok işe yarıyor. Özellikle iki listeyi bir şekilde birleştirmek istediğinizde veya eşzamanlı olarak iki listeyi işlemek istediğinizde çok işe yarıyor. Şuradaki gibi;
+
+```
+ghci> zip [1,2,3,4,5] [5,5,5,5,5]  
+[(1,5),(2,5),(3,5),(4,5),(5,5)]  
+ghci> zip [1 .. 5] ["one", "two", "three", "four", "five"]  
+[(1,"one"),(2,"two"),(3,"three"),(4,"four"),(5,"five")]
+```
+
+Elemanları çiftleştirip yeni bir liste üretiyor. İlk eleman ilk parçaya, ikinci eleman ikinci parçaya ve böyle devam ediyor. Unutmayın, çiftler farklı türlerle çalışabiliyor, yani `zip` iki farklı türde liste alabilir ve birleştirebilir. Peki ya listelerin boyları eşit değilse?
+
+```
+ghci> zip [5,3,2,6,2,7,2,5,4,6,6] ["im","a","turtle"]  
+[(5,"im"),(3,"a"),(2,"turtle")]
+```
+
+Uzun liste, kısa olan listeye uyacak şekilde kırpılacak. Çünkü Haskell tembeldir, biz sonlu bir listeyle sonsuz bir listeyi birleştirebiliriz:
+
+```
+ghci> zip [1..] ["apple", "orange", "cherry", "mango"]  
+[(1,"apple"),(2,"orange"),(3,"cherry"),(4,"mango")]
+```
+
+![triangle](http://s3.amazonaws.com/lyah/pythag.png)
+
+Demetler ve liste kavrayıcılarını birlikte kullanacabileceğimiz bir problem: çevresi 24 olan ve tüm kenarları 10'a eşit veya küçük olan bir dik üçgen oluşturalım. Öncelikle, tüm kenarları 10'a eşit veya küçük tüm üçgenleri oluşturalım.
+
+```
+ghci> let triangles = [ (a,b,c) | c <- [1..10], b <- [1..10], a <- [1..10] ]   
+```
+
+Sadece 3 liste aldık ve çıktı fonksiyonumuz bu listeleri bir üçlü oluşturacak hale getirdi. Eğer GHCi'de `triangles` yazarak bunu çalıştırırsanız kenarları 10'a eşit veya küçük olan tüm üçgenlerin listesini alırsınız. Ardından, bir sonlandırma koşulu ekleyeceğiz ki bize sadece dik üçgenler lazım. Ayrıca, b kenarının hipotenüsden, a kenarının da b kenarından büyük olmadığına dikkat ederek fonksiyonu güncelleyeceğiz.
+
+```
+ghci> let rightTriangles = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2]   
+```
+
+Neredeyse tamamız. Şimdi, sonlandırma koşulunu güncelleyip sadece çevresi 24 olanları istediğimizi söylüyoruz.
+
+```
+ghci> let rightTriangles' = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2, a+b+c == 24]  
+ghci> rightTriangles'  
+[(6,8,10)]
+```
+
+Ve, işte cevabımız. Bu fonksiyonel programlamada yaygın bir yaklaşımdır. Tüm çözümlerin başlangıç kümesini alırsınız ve doğru sonuca erişene kadar bu kümeye dönüşümler uygular ve filtrelersiniz. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
