@@ -2,7 +2,7 @@
 
 Merhaba,
 
-Haskell öğrenmek isteyenlerin ilk tercihlerinden biri olan [Learn You a Haskell for Great Good!](http://learnyouahaskell.com/chapters) dökümanının Türkçe çevirisini yapmaya niyetlendik. Şu anda döküman üzerinde sadece [Emre YILMAZ](https://github.com/delirehberi) çalışıyor bu sebeple dökümanın tamamlanması planlanan en iyimser zaman 2021 yılı. Daha erken bitirmek için çabalayacağız ancak iş-güç meselesi.
+Haskell öğrenmek isteyenlerin ilk tercihlerinden biri olan [Learn You a Haskell for Great Good!](http://learnyouahaskell.com/chapters) dökümanının Türkçe çevirisini yapmaya niyetlendik. Şu anda döküman üzerinde sadece [Emre YILMAZ](https://github.com/delirehberi) ve [Deniz Koluaçık](https://github.com/koluacik) çalışıyor bu sebeple dökümanın tamamlanması planlanan en iyimser zaman 2021 sonu. Daha erken bitirmek için çabalayacağız ancak iş-güç meselesi.
 
 Bu süreçte dökümanın kısımlarını üstlenmek isteyenler olursa ne âlâ. İngilizce metindeki üslûba yakın yazmaya çalışıyoruz. Birebir çeviriden değil, eşleşik kültürel çeviriden yanayız. Teknik terimleri çok gerekmedikçe çevirmiyoruz ancak dile oturmuş terimler varsa Türkçesini kullanmayı tercih ediyoruz. 
 
