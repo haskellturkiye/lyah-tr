@@ -19,13 +19,13 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
     - [x] About this tutorial
     - [x] So what's Haskell?
     - [x] What you need to dive in
-- [ ] [Starting Out](starting-out.md) - @delirehberi
+- [x] [Starting Out](starting-out.md) - @delirehberi
     - [x] Ready, set, go!
     - [x] Baby's first functions
     - [x] An intro to lists
     - [x] Texas ranges
     - [x] I'm a list comprehension
-    - [ ] Tuples
+    - [x] Tuples
 - [ ] Types and Typeclasses - @koluacik
     - [x] Believe the type
     - [x] Type variables
