@@ -2,7 +2,7 @@
 
 Merhaba,
 
-Haskell öğrenmek isteyenlerin ilk tercihlerinden biri olan [Learn You a Haskell for Great Good!](http://learnyouahaskell.com/chapters) dökümanının Türkçe çevirisini yapmaya niyetlendik. Şu anda döküman üzerinde sadece [Emre YILMAZ](https://github.com/delirehberi) çalışıyor bu sebeple dökümanın tamamlanması planlanan en iyimser zaman 2021 yılı. Daha erken bitirmek için çabalayacağız ancak iş-güç meselesi.
+Haskell öğrenmek isteyenlerin ilk tercihlerinden biri olan [Learn You a Haskell for Great Good!](http://learnyouahaskell.com/chapters) dökümanının Türkçe çevirisini yapmaya niyetlendik. Şu anda döküman üzerinde sadece [Emre YILMAZ](https://github.com/delirehberi) ve [Deniz Koluaçık](https://github.com/koluacik) çalışıyor bu sebeple dökümanın tamamlanması planlanan en iyimser zaman 2021 sonu. Daha erken bitirmek için çabalayacağız ancak iş-güç meselesi.
 
 Bu süreçte dökümanın kısımlarını üstlenmek isteyenler olursa ne âlâ. İngilizce metindeki üslûba yakın yazmaya çalışıyoruz. Birebir çeviriden değil, eşleşik kültürel çeviriden yanayız. Teknik terimleri çok gerekmedikçe çevirmiyoruz ancak dile oturmuş terimler varsa Türkçesini kullanmayı tercih ediyoruz. 
 
@@ -19,18 +19,18 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
     - [x] About this tutorial
     - [x] So what's Haskell?
     - [x] What you need to dive in
-- [ ] [Starting Out](starting-out.md) - @delirehberi
-    - [ ] Ready, set, go!
-    - [ ] Baby's first functions
-    - [ ] An intro to lists
-    - [ ] Texas ranges
-    - [ ] I'm a list comprehension
-    - [ ] Tuples
-- [ ] Types and Typeclasses
-    - [ ] Believe the type
-    - [ ] Type variables
+- [x] [Starting Out](starting-out.md) - @delirehberi
+    - [x] Ready, set, go!
+    - [x] Baby's first functions
+    - [x] An intro to lists
+    - [x] Texas ranges
+    - [x] I'm a list comprehension
+    - [x] Tuples
+- [ ] Types and Typeclasses - @koluacik
+    - [x] Believe the type
+    - [x] Type variables
     - [ ] Typeclasses 101
-- [ ] Syntax in Functions
+- [ ] Syntax in Functions - @delirehberi
     - [ ] Pattern matching
     - [ ] Guards, guards!
     - [ ] Where!?
