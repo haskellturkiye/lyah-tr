@@ -30,7 +30,7 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
     - [x] Believe the type
     - [x] Type variables
     - [ ] Typeclasses 101
-- [ ] Syntax in Functions
+- [ ] Syntax in Functions - @delirehberi
     - [ ] Pattern matching
     - [ ] Guards, guards!
     - [ ] Where!?
