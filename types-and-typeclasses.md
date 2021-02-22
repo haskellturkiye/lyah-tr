@@ -87,3 +87,20 @@ fst fonksiyonunu hatırlıyor musunuz? Bu fonksiyon herhangi bir sıralı ikilin
 ```
 
 fst fonksiyonunun içinde iki tip olan bir tuple alıp tupleın ilk elemanı ile aynı tipte bir eleman döndüğünü görüyoruz. a ve b birbirinden bağımsız olduğu için fonksiyonu uyguladığımız sıralı ikilinin elemanlarının tiplerinin aynı olmak zorunda olmadığı gibi farklı olmak zorunda da olmadığını belirtmiş oluyoruz.
+
+
+## Tipsınıfları (Typeclasses) 101
+
+Bir tipsınıfı, bazı davranışları tanımlayan bir çeşit arayüzdür. Eğer bir tip, bir tipsınıfının parçası ise; bunun anlamı  bu tipin, tipsınıfının tanımladığı davranışları desteklediğidir. Nesne tabanlı programlamadan gelen bir çok insanın kafası, nesne tabanlı dillerdeki sınıflar ile tipsınıflarının benzer olduğunu düşündükleri için karışmaktadır. Aslında, değiller. Bunları bir çeşit Java arayüzleri(interfaces) gibi düşünebilirsiniz, sadece çok daha iyiler. 
+
+`==` fonksiyonunun tür imzası nedir?
+
+```
+ghci> :t (==)  
+(==) :: (Eq a) => a -> a -> Bool
+```
+
+  Note: eşittir operatörü de bir fonksiyondur. Yani `+`,`*`,`-`,`/` operatörlü de ve neredeyse tüm operatörler de. Eğer bir fonksiyon sadece özel karakterler içeriyorsa, bu öntanımlı olarak içerlek (infix) fonksiyon sayılır. Eğer bir operatörün türünü kontrol etmek istersek, başka bir fonksiyona geçirmek istersek veya normal fonksiyon olarak kullanmak istersek, parantezlerle çevreleyebiliriz.
+
+İlginç. Yeni bir şey görüyoruz; `=>` işareti. `=>` işaretinden önceki her şey sınıf kısıtı (class constraint) olarak bilinir. Önceki tür tanımını şöyle okuyabiliriz; eşitlik fonksiyonu aynı türde iki değer alır ve `Bool` türünde bir değer döner. Bu iki değişkenin türü `Eq` sınıfının üyesi olmalıdır. `Eq` sınıf kısıtıydı. 
+
