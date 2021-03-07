@@ -87,3 +87,195 @@ fst fonksiyonunu hatırlıyor musunuz? Bu fonksiyon herhangi bir sıralı ikilin
 ```
 
 fst fonksiyonunun içinde iki tip olan bir tuple alıp tupleın ilk elemanı ile aynı tipte bir eleman döndüğünü görüyoruz. a ve b birbirinden bağımsız olduğu için fonksiyonu uyguladığımız sıralı ikilinin elemanlarının tiplerinin aynı olmak zorunda olmadığı gibi farklı olmak zorunda da olmadığını belirtmiş oluyoruz.
+
+
+## Tipsınıfları (Typeclasses) 101
+
+Bir tipsınıfı, bazı davranışları tanımlayan bir çeşit arayüzdür. Eğer bir tip, bir tipsınıfının parçası ise; bunun anlamı  bu tipin, tipsınıfının tanımladığı davranışları desteklediğidir. Nesne tabanlı programlamadan gelen bir çok insanın kafası, nesne tabanlı dillerdeki sınıflar ile tipsınıflarının benzer olduğunu düşündükleri için karışmaktadır. Aslında, değiller. Bunları bir çeşit Java arayüzleri(interfaces) gibi düşünebilirsiniz, sadece çok daha iyiler. 
+
+`==` fonksiyonunun tür imzası nedir?
+
+```
+ghci> :t (==)  
+(==) :: (Eq a) => a -> a -> Bool
+```
+
+  Note: eşittir operatörü de bir fonksiyondur. Yani `+`,`*`,`-`,`/` operatörlü de ve neredeyse tüm operatörler de. Eğer bir fonksiyon sadece özel karakterler içeriyorsa, bu öntanımlı olarak içerlek (infix) fonksiyon sayılır. Eğer bir operatörün türünü kontrol etmek istersek, başka bir fonksiyona geçirmek istersek veya normal fonksiyon olarak kullanmak istersek, parantezlerle çevreleyebiliriz.
+
+İlginç. Yeni bir şey görüyoruz; `=>` işareti. `=>` işaretinden önceki her şey sınıf kısıtı (class constraint) olarak bilinir. Önceki tür tanımını şöyle okuyabiliriz; eşitlik fonksiyonu aynı türde iki değer alır ve `Bool` türünde bir değer döner. Bu iki değişkenin türü `Eq` sınıfının üyesi olmalıdır. `Eq` sınıf kısıtıydı. 
+
+`Eq` tip sınıfı eşitliği sınamak için bir arayüz sağlar. İki değeri arasındaki eşitliğin sınanmasının anlamlı olduğu herhangi bir tür `Eq` sınıfının bir üyesi olmalıdır. IO hariç tüm standart Haskell türleri ve fonksiyonları `Eq` tip sınıfının bir parçasıdır.
+
+`elem` fonksiyonun türü `(Eq a) => a -> [a] -> Bool` olarak ayarlıdır çünkü bir listede bizim istediğimiz üyenin bulunup bulunmadığını anlamak için üyeleri karşılaştırırken `==` kullanır.
+
+Bazı temel tip sınıfları:
+
+`Eq` eşitlik sınamayı destekleyen tipler için kullanılır. Üyeleri `==` ve `/=` fonksiyonlarını kullanır. Yani, eğer `Eq` sınıf sabitine sahip bir tip değişkeni barındıran bir fonksiyon varsa, içerisinde bir yerlerde `==` veya `/=` fonksiyonlarını kullanır. Bir önceki hariç tuttuklarımız hariç tüm türler `Eq` tip sınıfının üyesidir, yani eşitlikleri sınanabilir.
+
+```
+ghci> 5 == 5  
+True  
+ghci> 5 /= 5  
+False  
+ghci> 'a' == 'a'  
+True  
+ghci> "Ho Ho" == "Ho Ho"  
+True  
+ghci> 3.432 == 3.432  
+True  
+```
+
+`Ord` sıralanabilir türler içindir.
+
+```
+ghci> :t (>)  
+(>) :: (Ord a) => a -> a -> Bool
+```
+
+Fonksiyonlar hariç gördüğümüz neredeyse tüm türler `Ord`'un bir parçasıdır. `Ord` tip sınıfı `>`,`<`,`>=` ve `<=` gibi tüm standart karşılaştırma fonksiyonlarını kapsar. `compare` fonksiyonu `Ord` üyesi iki aynı tür alır ve sırasını döner. `Ordering` ise `GT`,`LT`, veya `EQ` değerlerini alabilen bir türdür. Değerlerin anlamı ise *greater than(büyüktür)*, *lesser than(küçüktür)* ve *equal(eşittir)* demektir. 
+
+`Ord` tip sınıfının üyesi olmak için, öncelikle prejisli ve ayrıcalıklı `Eq` klübüne üye olmak gerekir.
+
+```
+ghci> "Abrakadabra" < "Zebra"  
+True  
+ghci> "Abrakadabra" `compare` "Zebra"  
+LT  
+ghci> 5 >= 2  
+True  
+ghci> 5 `compare` 3  
+GT
+```
+
+`Show` tip sınıfının üyeleri ise metin(string) olarak gösterilebilirlerdir. Fonksiyonlar hariç gördüğümüz tüm türler `Show` tip sınıfının üyesidir. `Show` tipsınıfının en çok kullanılan fonksiyonu `show`'dur. `Show` tip sınıfının üyesi bir değer alır ve metin olarak gösterir.
+
+```
+ghci> show 3  
+"3"  
+ghci> show 5.334  
+"5.334"  
+ghci> show True  
+"True"
+```
+
+`Read` tip sınıfı bir nevi `Show` tip sınıfının tersi gibidir. `read` fonksiyonu bir metin(string) alır ve `Read` tip sınıfına üye olan tipe çevirir.
+
+```
+ghci> read "True" || False  
+True  
+ghci> read "8.2" + 3.8  
+12.0  
+ghci> read "5" - 2  
+3  
+ghci> read "[1,2,3,4]" ++ [3]  
+[1,2,3,4,3]
+```
+
+Şimdiye kadar çok iyi. Tekrar, tüm gördüğümüz türler, bu tipsınıflarına dahildir. Peki ama, eğer sadece `read "4"` yazarsak ne olur?
+
+```
+ghci> read "4"  
+<interactive>:1:0:  
+    Ambiguous type variable `a' in the constraint:  
+      `Read a' arising from a use of `read' at <interactive>:1:0-7  
+    Probable fix: add a type signature that fixes these type variable(s)
+```
+
+GHCI'ın bize söylediği şey, burada bizim hangi türde değer istediğimizi bilmiyor olduğudur. Önceki kullanımlarımıza dikkat ederseniz `read` fonksiyonundan sonra sonucu doğurabileceği bir şeyler yaptık. Bu şekilde, GHCI `read` fonksiyonunu kullandığımızda hangi türde geri dönüş beklediğimize dair bir çıkarımda bulunabildi. Mantıksal(boolean) bir değer ile beraber kullandığımızda `Bool` türünde bir veri beklediğimiz sonucunu çıkarttı. Fakat şimdi, bizim `Read` tip sınıfına ait bir veri tipinde dönüş istediğimizi bilse de bunun hangi veri tipi olduğunu bilemiyor. `read` fonksiyonun tür imzasına bakarsak;
+
+```
+ghci> :t read  
+read :: (Read a) => String -> a
+```
+
+Gördünüz mü? `Read` tip sınıfında bir değer döndürüyor, ancak biz bu değer başka bir türü belli işlemde kullanmazsak, hangi türe dönüştüreceğini bilemeyecek. Bu yüzden aleni tür açıklamalarını(type annotation) kullanabiliyoruz. Tür açıklamaları, ifadenin türününün ne olduğunun açıkca belirtilebilmesi için kullanılıyor. İfadenin sonuna `::` ekleyerek kullanbiliriz. Bakınız;
+
+```
+ghci> read "5" :: Int  
+5  
+ghci> read "5" :: Float  
+5.0  
+ghci> (read "5" :: Float) * 4  
+20.0  
+ghci> read "[1,2,3,4]" :: [Int]  
+[1,2,3,4]  
+ghci> read "(3, 'a')" :: (Int, Char)  
+(3, 'a')
+```
+
+Çoğu ifadenin türünü derleyici kendisi çıkarımla bilebilir. Fakat bazen, derleyici `read "5"` için `Int` mi yoksa `Float` mı döndürmesi gerektiğine karar veremez. Türü anlayabilmek için Haskell'in `read "5"` ifadesini çalıştırması gerekir. Fakat Haskell statik türlü bir dil olduğundan dolayı, derlenmeden (veya GHCI üzerinde çalışmadan) önce türü bilmesi gerekir. Sonuç olarak Haskell'e şunu söylemek zorundayız; "Hey, şu anda bilmiyor olsan da bu ifade bu türe sahip!".
+
+`Enum` üyeleri ardışık sıralı olabilen tip sınıfıdır. `Enum` tip sınıfının temel faydası aralık listelerinde kullanılabilir türler olmasıdır. Ayrıca ardıl ve ölcülleri bulunabilir ki  `succ` ve `pred` fonksiyonları bu iş içindir. Bu sınıftaki standart türler `()`,`Bool`,`Char`,`Ordering`,`Int`,`Integer`,`Float` ve `Double`'dır.
+
+```
+ghci> ['a'..'e']  
+"abcde"  
+ghci> [LT .. GT]  
+[LT,EQ,GT]  
+ghci> [3 .. 5]  
+[3,4,5]  
+ghci> succ 'B'  
+'C'
+```
+
+`Bounded` üyeler bir alt ve üst limite sahiptirler.
+
+```
+ghci> minBound :: Int  
+-2147483648  
+ghci> maxBound :: Char  
+'\1114111'  
+ghci> maxBound :: Bool  
+True  
+ghci> minBound :: Bool  
+False  
+```
+
+`minBound` ve `maxBound` ilginçtirler çünkü tür imzası şöyledir: `(Bounded a) => a`. Bir bakıma polimorfik sabitlerdir.
+
+Tüm ikililer(tuple) eğer elemanları öyleyse `Bounded` sınıfına aittirler. 
+
+```
+maxBound :: (Bool, Int, Char)  
+(True,2147483647,'\1114111')  
+```
+
+`Num` numarasal bir tip sınıfıdır. Üyeleri sayı gibi davranma özelliği olan şeylerdir. Bir sayı tipini sınayalım;
+
+```
+ghci> :t 20  
+20 :: (Num t) => t
+```
+
+Görünen o ki tüm sayılar bir de polimorfik sabitlerdir. `Num` tip sınıfına ait herhangi bir tür gibi davranabilirler.
+
+```
+ghci> 20 :: Int  
+20  
+ghci> 20 :: Integer  
+20  
+ghci> 20 :: Float  
+20.0  
+ghci> 20 :: Double  
+20.0
+```
+
+Bunlar `Num` tip sınıfına ait türlerdir. Eğer `*` fonksiyonun türünü sorarsak sayı kabul ettiğini göreceğiz.
+
+```
+ghci> :t (*)  
+(*) :: (Num a) => a -> a -> a
+```
+
+Aynı türde iki sayı alır ve yine aynı türde bir sayı döner. Bu yüzden `(5 :: Int) * (6 :: Integer)` tip hatası verecek ancak `5 * (6 :: Integer)` beklendiği gibi çalışacak ve `Integer` bir sonuç üretecektir çünkü `5` sayısı `Int` veya `Integer` gibi davranabilir. 
+
+`Num` tip sınıfına katılabilmek için bir tür `Show` ve `Eq` tip sınıflarıyla da arkadaş olmalıdır.
+
+`Integral` de bir sayısal tip sınıfıdır. `Num` tip sınıfı tüm sayıları kapsar, integral sayılar ve gerçek sayılar dahil. `Integral` tip sınıfı ise sadece integral sayıları kapsar. `Int` ve `Integer` bu tip sınıfına dahildir. 
+
+`Floating` sadece kayan noktalı sayıları kapsar, yani `Float` ve `Double`
+
+`fromIntegral` sayılarla uğraşmak için kullanışlı bir fonksiyondur. `fromIntegral :: (Num b, Integral a) => a -> b` şeklinde bir tip tanımı vardır. Tip imzasından görebileceğimiz gibi integral bir sayı alır ve daha genel bir sayısal değer döndürür. Bu, integral ve kayan noktalı sayılarla bir arada çalışmak gerektiğinde kullanışlıdır. Örneğin, `length` fonksiyonunun tip tanımı `(Num b) => length :: [a] -> b` olmak yerine, `length :: [a] -> Int` olarak belirlenmiştir. Sanırım bunun ardında tarihsel veya başka bir sebep var, fakat bana sorarsanız aptalca. Her neyse, bir listenin boyutunu alıp buna `3.2` eklemek istersek, `Int` türüne kayan noktalı sayı eklemeye çalıştığımız için hata alacağız. Bunun etrafından dolaşmak için şöyle yapabiliyoruz; `fromIntegral (length [1,2,3,4]) + 3.2`.
+
+Dikkat edin, `fromIntegral` birden çok sınıf sabitine sahip. Bu tamamen doğru ve görebileceğiniz gibi parantezler içinde virgülle ayrılmış.
+

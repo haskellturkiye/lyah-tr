@@ -26,10 +26,10 @@ Ayrıca [Twitter Haskell Türkiye](https://twitter.com/haskellturkiye) hesabın�
     - [x] Texas ranges
     - [x] I'm a list comprehension
     - [x] Tuples
-- [ ] Types and Typeclasses - @koluacik
+- [x] [Types and Typeclasses](types-and-typeclasses.md) - @koluacik
     - [x] Believe the type
     - [x] Type variables
-    - [ ] Typeclasses 101
+    - [x] Typeclasses 101 - @delirehberi
 - [ ] Syntax in Functions - @delirehberi
     - [ ] Pattern matching
     - [ ] Guards, guards!
