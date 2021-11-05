@@ -11,12 +11,3 @@ Hala özyinelemenin ne olduğunu bilmiyorsan, bu cümleyi oku. Haha! Bu bir şak
 ## Etkileyici maksimum
 
 Maksimum fonksiyonu sıralanabilir şeylerin bir listesini alır (mesela *Ord* tip sınıfının altındaki tipler) ve bunların en büyüğünü döndürür.
-
-<span style="color:green">
-
-<span style="color:orange">
-The maximum function takes a list of things that can be ordered (e.g. instances of the Ord typeclass) and returns the biggest of them. </span> Think about how you'd implement that in an imperative fashion. You'd probably set up a variable to hold the maximum value so far and then you'd loop through the elements of a list and if an element is bigger than then the current maximum value, you'd replace it with that element. The maximum value that remains at the end is the result. Whew! That's quite a lot of words to describe such a simple algorithm!
-
-Now let's see how we'd define it recursively. We could first set up an edge condition and say that the maximum of a singleton list is equal to the only element in it. Then we can say that the maximum of a longer list is the head if the head is bigger than the maximum of the tail. If the maximum of the tail is bigger, well, then it's the maximum of the tail. That's it! Now let's implement that in Haskell.
-
-</span>
